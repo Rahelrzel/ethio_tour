@@ -14,6 +14,7 @@ class EthioTour extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+          // useMaterial3: true,
           textTheme: GoogleFonts.ptSansTextTheme(Theme.of(context).textTheme)),
       home: Homepage(),
     );

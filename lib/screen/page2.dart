@@ -1,3 +1,4 @@
+import 'package:ethio_tour/screen/page3.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -59,7 +60,7 @@ class Page2 extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => Page2(),
+              builder: (context) => page3(),
             ),
           );
         },

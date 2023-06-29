@@ -1,11 +1,12 @@
-import 'package:ethio_tour/screen/page4.dart';
+import 'package:ethio_tour/screen/page3.dart';
+import 'package:ethio_tour/screen/page5.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const myOrange = Color(0xFFD99E6A);
 
-class page3 extends StatelessWidget {
-  const page3({super.key});
+class page4 extends StatelessWidget {
+  const page4({super.key});
 
   @override
   // ignore: dead_code
@@ -38,28 +39,30 @@ class page3 extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.only(top: 20.0, left: 16.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
                     children: [
-                      /*IconButton(
+                      IconButton(
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const Page2()),
+                                  builder: (context) => const page3()),
                             );
                           },
-                          icon: const Icon(Icons.arrow_back_sharp)),*/
-                      Text('Login',
-                          style: GoogleFonts.lobster(
-                            color: Colors.white,
-                            fontSize: 50,
-                          )),
+                          icon: const Icon(Icons.arrow_back_sharp)),
                     ],
                   ),
+                  // SizedBox(height: 20),
+                  Text('Register',
+                      style: GoogleFonts.lobster(
+                        color: Colors.white,
+                        fontSize: 50,
+                      )),
+
                   const SizedBox(
                     height: 70.0,
                   ),
@@ -69,7 +72,19 @@ class page3 extends StatelessWidget {
                         enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                                 style: BorderStyle.solid, color: myOrange)),
-                        labelText: 'Username',
+                        labelText: 'Full Name',
+                        prefixIcon:
+                            Icon(Icons.person, color: Color(0xFFD99E6A)),
+                        labelStyle: TextStyle(color: Color(0xFFD99E6A))),
+                  ),
+                  const SizedBox(height: 20.0), // Separating line
+
+                  TextFormField(
+                    decoration: const InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                style: BorderStyle.solid, color: myOrange)),
+                        labelText: 'Email',
                         prefixIcon:
                             Icon(Icons.person, color: Color(0xFFD99E6A)),
                         labelStyle: TextStyle(color: Color(0xFFD99E6A))),
@@ -92,7 +107,7 @@ class page3 extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const page4()));
+                              builder: (context) => const page5()));
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
@@ -118,7 +133,12 @@ class page3 extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const page3()));
+                    },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
                         Color(0xFF22403D), // Customize the button color
