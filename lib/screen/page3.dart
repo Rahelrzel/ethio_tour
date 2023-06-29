@@ -1,12 +1,18 @@
 import 'package:ethio_tour/screen/page4.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const myOrange = Color(0xFFD99E6A);
 
-class page3 extends StatelessWidget {
+class page3 extends StatefulWidget {
   const page3({super.key});
 
+  @override
+  State<page3> createState() => _page3State();
+}
+
+class _page3State extends State<page3> {
   @override
   // ignore: dead_code
   Widget build(BuildContext context) {
