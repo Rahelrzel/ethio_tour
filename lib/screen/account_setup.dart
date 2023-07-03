@@ -1,25 +1,20 @@
-import 'package:ethio_tour/main.dart';
-import 'package:ethio_tour/screen/homepage.dart';
-import 'package:ethio_tour/screen/page3.dart';
-import 'package:ethio_tour/screen/page4.dart';
+import 'package:ethio_tour/screen/register.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 
 const myOrange = Color(0xFFD99E6A);
 
-class page5 extends StatefulWidget {
-  const page5({super.key});
+class AccountSetupPage extends StatefulWidget {
+  const AccountSetupPage({super.key});
 
   @override
-  State<page5> createState() => _Page5State();
+  State<AccountSetupPage> createState() => _Page5State();
 }
 
-class _Page5State extends State<page5> {
+class _Page5State extends State<AccountSetupPage> {
   String? _selectedImagePath;
 
   void _selectImage() {
-    // You can implement image selection logic here, such as using an image picker package
-    // For simplicity, this example uses a predefined image path
     setState(() {
       _selectedImagePath = 'assets/images/profile_image.jpg';
     });
@@ -61,7 +56,7 @@ class _Page5State extends State<page5> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const page4()),
+                                  builder: (context) => const RegisterPage()),
                             );
                           },
                           icon: const Icon(Icons.arrow_back_sharp)),
@@ -144,12 +139,11 @@ class _Page5State extends State<page5> {
                   //SizedBox(height: 70.0), // Separating line
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => homepage()));
+                      context.go('/home');
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                        Color(0xFFD99E6A),
+                        const Color(0xFFD99E6A),
                         // Customize the button color
                       ),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -162,11 +156,13 @@ class _Page5State extends State<page5> {
                     child: const Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: 100, vertical: 15),
-                      child: Text('Continue',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 15,
-                          )),
+                      child: Text(
+                        'Continue',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0),
+                          fontSize: 15,
+                        ),
+                      ),
                     ),
                   ),
                   //SizedBox(height: 20),

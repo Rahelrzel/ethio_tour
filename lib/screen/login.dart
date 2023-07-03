@@ -1,18 +1,17 @@
-import 'package:ethio_tour/screen/page4.dart';
+import 'package:ethio_tour/screen/register.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const myOrange = Color(0xFFD99E6A);
 
-class page3 extends StatefulWidget {
-  const page3({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<page3> createState() => _page3State();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _page3State extends State<page3> {
+class _LoginPageState extends State<LoginPage> {
   @override
   // ignore: dead_code
   Widget build(BuildContext context) {
@@ -98,7 +97,7 @@ class _page3State extends State<page3> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const page4()));
+                              builder: (context) => const RegisterPage()));
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(

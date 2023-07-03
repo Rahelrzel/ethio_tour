@@ -1,127 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class homepage extends StatefulWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
-  State<homepage> createState() => _homepageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _homepageState extends State<homepage> {
+class _HomePageState extends State<HomePage> {
   var currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    double displayWidth = MediaQuery.of(context).size.width;
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.all(displayWidth * .05),
-        height: displayWidth * .12,
-        decoration: BoxDecoration(
-          color: Color(0xff367368),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(.1),
-              blurRadius: 30,
-              offset: Offset(0, 10),
-            ),
-          ],
-          borderRadius: BorderRadius.circular(50),
-        ),
-        child: ListView.builder(
-          itemCount: 4,
-          scrollDirection: Axis.horizontal,
-          padding: EdgeInsets.symmetric(horizontal: displayWidth * .02),
-          itemBuilder: (context, index) => InkWell(
-            onTap: () {
-              setState(() {
-                currentIndex = index;
-                HapticFeedback.lightImpact();
-              });
-            },
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            child: Stack(
-              children: [
-                AnimatedContainer(
-                  duration: Duration(seconds: 1),
-                  curve: Curves.fastLinearToSlowEaseIn,
-                  width: index == currentIndex
-                      ? displayWidth * .32
-                      : displayWidth * .18,
-                  alignment: Alignment.center,
-                  child: AnimatedContainer(
-                    duration: const Duration(seconds: 1),
-                    curve: Curves.fastLinearToSlowEaseIn,
-                    height: index == currentIndex ? displayWidth * .09 : 0,
-                    width: index == currentIndex ? displayWidth * .32 : 0,
-                    decoration: BoxDecoration(
-                      color: index == currentIndex
-                          ? Color(0xffd99e6a)
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                  ),
-                ),
-                AnimatedContainer(
-                  duration: Duration(seconds: 1),
-                  curve: Curves.fastLinearToSlowEaseIn,
-                  width: index == currentIndex
-                      ? displayWidth * .31
-                      : displayWidth * .18,
-                  alignment: Alignment.center,
-                  child: Stack(
-                    children: [
-                      Row(
-                        children: [
-                          AnimatedContainer(
-                            duration: Duration(seconds: 1),
-                            curve: Curves.fastLinearToSlowEaseIn,
-                            width:
-                                index == currentIndex ? displayWidth * .13 : 0,
-                          ),
-                          AnimatedOpacity(
-                            opacity: index == currentIndex ? 1 : 0,
-                            duration: Duration(seconds: 1),
-                            curve: Curves.fastLinearToSlowEaseIn,
-                            child: Text(
-                              index == currentIndex
-                                  ? '${listOfStrings[index]}'
-                                  : '',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          AnimatedContainer(
-                            duration: Duration(seconds: 1),
-                            curve: Curves.fastLinearToSlowEaseIn,
-                            width:
-                                index == currentIndex ? displayWidth * .03 : 20,
-                          ),
-                          Icon(
-                            listOfIcons[index],
-                            size: displayWidth * .046,
-                            color: index == currentIndex
-                                ? Colors.white
-                                : Colors.black26,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
       backgroundColor: Color(0xFF22403D),
       body: CustomScrollView(
         slivers: [
@@ -138,14 +32,15 @@ class _homepageState extends State<homepage> {
                 children: [
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.only(left: 20, right: 5),
+                      padding: const EdgeInsets.only(left: 20, right: 5),
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 45, 92, 85).withOpacity(0.8),
+                        color: const Color.fromARGB(255, 45, 92, 85)
+                            .withOpacity(0.8),
                         borderRadius: BorderRadius.circular(40),
                       ),
                       child: Row(
                         children: [
-                          Expanded(
+                          const Expanded(
                             child: TextField(
                               decoration: InputDecoration(
                                 border: InputBorder.none,
@@ -157,16 +52,16 @@ class _homepageState extends State<homepage> {
                           ),
                           IconButton(
                             onPressed: () {},
-                            icon: Icon(Icons.search),
+                            icon: const Icon(Icons.search),
                           )
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
-                  CircleAvatar(
+                  const CircleAvatar(
                     // radius: 10,
                     backgroundImage: AssetImage(
                       "assets/images/protect.jpeg",
@@ -289,20 +184,6 @@ class _homepageState extends State<homepage> {
       ),
     );
   }
-
-  List<IconData> listOfIcons = [
-    Icons.home_rounded,
-    Icons.favorite_rounded,
-    Icons.settings_rounded,
-    Icons.person_rounded,
-  ];
-
-  List<String> listOfStrings = [
-    'Home',
-    'Favorite',
-    'Settings',
-    'Account',
-  ];
 }
 
 class PlaceCard extends StatelessWidget {
@@ -323,63 +204,68 @@ class PlaceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 250,
-      padding: EdgeInsets.all(10),
-      margin: const EdgeInsets.only(left: 20),
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(21, 38, 38, 0.75),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+    return GestureDetector(
+      onTap: () {
+        context.push('/place-details/$id');
+      },
+      child: Container(
+        width: 250,
+        padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.only(left: 20),
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(21, 38, 38, 0.75),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: Image.asset(
+                  this.image,
+                  fit: BoxFit.cover,
+                ),
               ),
-              clipBehavior: Clip.antiAlias,
-              child: Image.asset(
-                this.image,
-                fit: BoxFit.cover,
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Text(
+              this.name,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Text(
-            this.name,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+            Text(
+              this.region,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white.withOpacity(0.3),
+              ),
             ),
-          ),
-          Text(
-            this.region,
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.white.withOpacity(0.3),
+            SizedBox(
+              height: 8,
             ),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Row(
-            children: List.generate(5, (index) => index + 1)
-                .map(
-                  (e) => Icon(
-                    e <= this.rating
-                        ? Icons.star_rounded
-                        : Icons.star_outline_rounded,
-                    color: Color(0xFFD99E6A),
-                  ),
-                )
-                .toList(),
-          )
-        ],
+            Row(
+              children: List.generate(5, (index) => index + 1)
+                  .map(
+                    (e) => Icon(
+                      e <= this.rating
+                          ? Icons.star_rounded
+                          : Icons.star_outline_rounded,
+                      color: Color(0xFFD99E6A),
+                    ),
+                  )
+                  .toList(),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,15 +1,15 @@
-import 'package:ethio_tour/screen/page3.dart';
-import 'package:ethio_tour/screen/page5.dart';
+import 'package:ethio_tour/screen/login.dart';
+import 'package:ethio_tour/screen/account_setup.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const myOrange = Color(0xFFD99E6A);
 
-class page4 extends StatelessWidget {
-  const page4({super.key});
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({super.key});
 
   @override
-  // ignore: dead_code
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -39,7 +39,10 @@ class page4 extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 20.0, left: 16.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 16.0,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -50,7 +53,7 @@ class page4 extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const page3()),
+                                  builder: (context) => const LoginPage()),
                             );
                           },
                           icon: const Icon(Icons.arrow_back_sharp)),
@@ -101,23 +104,21 @@ class page4 extends StatelessWidget {
                         labelStyle: TextStyle(color: Color(0xFFD99E6A))),
                     obscureText: true,
                   ),
-                  SizedBox(height: 70.0), // Separating line
+                  const SizedBox(height: 70.0), // Separating line
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const page5()));
+                      context.push('/account-setup');
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                        Color(0xFFD99E6A),
+                        const Color(0xFFD99E6A),
                         // Customize the button color
                       ),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
-                              15.0), // Customize the border radius
+                            15.0,
+                          ), // Customize the border radius
                         ),
                       ),
                     ),
@@ -137,7 +138,7 @@ class page4 extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const page3()));
+                              builder: (context) => const LoginPage()));
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
