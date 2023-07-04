@@ -1,6 +1,7 @@
 import 'package:abushakir/abushakir.dart';
 import 'package:ethio_tour/config/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CalendarPage extends StatefulWidget {
@@ -43,7 +44,9 @@ class _CalendarPageState extends State<CalendarPage> {
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.push('/calendar/converter');
+            },
             icon: const Icon(Icons.sync),
             color: KAccentColor.shade400,
           ),

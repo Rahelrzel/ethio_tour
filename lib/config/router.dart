@@ -3,6 +3,7 @@ import 'package:ethio_tour/config/colors.dart';
 import 'package:ethio_tour/screen/account_setup.dart';
 import 'package:ethio_tour/screen/calendar.dart';
 import 'package:ethio_tour/screen/currency.dart';
+import 'package:ethio_tour/screen/calendar_converter.dart';
 import 'package:ethio_tour/screen/homepage.dart';
 import 'package:ethio_tour/screen/login.dart';
 import 'package:ethio_tour/screen/intro.dart';
@@ -56,6 +57,10 @@ final routerConfig = GoRouter(
         GoRoute(
           path: '/calendar',
           builder: (context, state) => const CalendarPage(),
+        ),
+        GoRoute(
+          path: '/calendar/converter',
+          builder: (context, state) => const CalendarConverterPage(),
         ),
         GoRoute(
           path: '/currency',
