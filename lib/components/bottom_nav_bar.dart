@@ -1,6 +1,7 @@
 import 'package:ethio_tour/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -14,16 +15,23 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   List<IconData> listOfIcons = [
     Icons.home_rounded,
-    Icons.favorite_rounded,
+    Icons.calendar_month,
     Icons.settings_rounded,
     Icons.person_rounded,
   ];
 
   List<String> listOfStrings = [
     'Home',
-    'Favorite',
+    'Calendar',
     'Settings',
     'Account',
+  ];
+
+  List<String> listOfPath = [
+    "/home",
+    "/calendar",
+    "/settings",
+    "/account",
   ];
 
   @override
@@ -51,7 +59,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           onTap: () {
             setState(() {
               currentIndex = index;
-              HapticFeedback.lightImpact();
+              context.go(listOfPath[index]);
             });
           },
           splashColor: Colors.transparent,
