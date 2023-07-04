@@ -18,7 +18,7 @@ class Review extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              height: 300,
+              height: 400,
               padding: EdgeInsets.all(25),
               decoration: BoxDecoration(
                 color: KPrimary.shade800,
@@ -80,7 +80,7 @@ class Review extends StatelessWidget {
                             style: TextStyle(
                                 color: Color.fromARGB(255, 184, 183, 183)),
                           ),
-                        )
+                        ),
                       ],
                     ),
                     padding: const EdgeInsets.all(10),
@@ -90,9 +90,36 @@ class Review extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        KAccentColor.shade600, // Customize the button color
+                      ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              15.0), // Customize the border radius
+                        ),
+                      ),
+                    ),
+                    child: const Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                      child: Text('Submit',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          )),
+                    ),
+                  ),
                 ],
               ),
             ),
+            SizedBox(height: 30),
             Container(
               width: 300,
               padding: EdgeInsets.all(16),
@@ -106,9 +133,9 @@ class Review extends StatelessWidget {
                   Text(
                     'Reviews',
                     style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                   SizedBox(height: 10),
                   ReviewItem(
@@ -116,7 +143,27 @@ class Review extends StatelessWidget {
                     rating: 4,
                     comment: 'Great product! Highly recommended.',
                   ),
-                  SizedBox(height: 10),
+                  ReviewItem(
+                    username: 'Jane Smith',
+                    rating: 5,
+                    comment: 'Excellent service. Will buy again!',
+                  ),
+                  ReviewItem(
+                    username: 'Jane Smith',
+                    rating: 5,
+                    comment: 'Excellent service. Will buy again!',
+                  ),
+                  ReviewItem(
+                    username: 'Jane Smith',
+                    rating: 5,
+                    comment:
+                        'Excellent service. Will buy again Excellent service. Will buy againvExcellent service. Will buy againExcellent service. Will buy again!',
+                  ),
+                  ReviewItem(
+                    username: 'Jane Smith',
+                    rating: 5,
+                    comment: 'Excellent service. Will buy again!',
+                  ),
                   ReviewItem(
                     username: 'Jane Smith',
                     rating: 5,
@@ -145,34 +192,55 @@ class ReviewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Text(
-              username,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: Colors.black,
               ),
-            ),
-            SizedBox(width: 5),
-            Icon(
-              Icons.star,
-              color: Colors.amber,
-              size: 16,
-            ),
-            Text(
-              rating.toString(),
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+              SizedBox(
+                width: 10,
               ),
-            ),
-          ],
-        ),
-        SizedBox(height: 5),
-        Text(comment),
-      ],
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    username,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                  SizedBox(width: 5),
+                  RatingBar.builder(
+                    ignoreGestures: true,
+                    initialRating: 3,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    itemSize: 15,
+                    allowHalfRating: false,
+                    itemCount: 5,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 1.0),
+                    itemBuilder: (context, _) => Icon(
+                      Icons.star,
+                      color: KAccentColor.shade400,
+                      size: 15,
+                    ),
+                    onRatingUpdate: (rating) {
+                      print(rating);
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(height: 5),
+          Text(comment,
+              style: TextStyle(color: Color.fromARGB(207, 255, 255, 255))),
+        ],
+      ),
     );
   }
 }
