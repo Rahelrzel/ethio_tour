@@ -206,7 +206,7 @@ class PlaceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push('/place-details/$id');
+        context.go('/place-details/$id');
       },
       child: Container(
         width: 250,

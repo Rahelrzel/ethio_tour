@@ -2,6 +2,7 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ethio_tour/config/colors.dart';
+import 'package:ethio_tour/screen/review.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -90,43 +91,89 @@ class PlaceDetails extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10),
                         child: Column(
-                          children: [
+                          children: const [
                             Row(
                               children: [
-                                Icon(
-                                  Icons.star,
-                                  color: KAccentColor.shade400,
-                                  size: 50,
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      color: KAccentColor.shade400,
+                                      size: 50,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "4.5",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 30,
+                                          ),
+                                        ),
+                                        Text(
+                                          "Rating",
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.white70,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
                                 ),
                                 SizedBox(
-                                  width: 10,
+                                  width: 100,
                                 ),
-                                Column(
+                                Row(
                                   children: [
-                                    Text(
-                                      "4.5",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 30,
-                                      ),
+                                    Icon(
+                                      Icons.cloudy_snowing,
+                                      color: KAccentColor.shade400,
+                                      size: 50,
                                     ),
-                                    Text(
-                                      "Rating",
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white70,
-                                      ),
-                                    )
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "16°",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 30,
+                                          ),
+                                        ),
+                                        Text(
+                                          "Temp",
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.white70,
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ],
                             ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Text(
+                              "The Axum mobile app offers a comprehensive guide to this UNESCO World Heritage Site, presenting a wealth of information at your fingertips. Discover the rich history of the Aksumite Empire, a powerful civilization that flourished from the 1st to the 8th century AD, shaping the region's culture, trade, and religion. Through interactive maps, stunning visuals, and expertly curated content, the app takes you on a virtual tour of Axum's iconic landmarks. Explore the awe-inspiring obelisks, towering stone monuments that symbolize the city's former glory. Learn about the significance of the obelisks and their intricate carvings, which showcase the empire's architectural prowess and spiritual beliefs.",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18),
+                            )
                           ],
                         ),
                       ),
                       Container(),
-                      Container(),
+                      Review(),
                     ],
                   ),
                 ),
@@ -168,6 +215,7 @@ class _HeaderState extends State<Header> {
             ),
             child: CarouselSlider(
               options: CarouselOptions(
+                  autoPlay: true,
                   height: size.height * .4,
                   padEnds: false,
                   viewportFraction: 1,
@@ -202,7 +250,7 @@ class _HeaderState extends State<Header> {
             child: Center(
               child: IconButton(
                 onPressed: () {
-                  context.pop();
+                  context.go('/home');
                 },
                 icon: Icon(Icons.arrow_back),
                 color: Colors.white,
