@@ -311,7 +311,12 @@ List<Place> places = const [
     region: "Addis Ababa",
     latitude: 9.0196,
     longitude: 38.7500,
-    pictures: ["url1", "url2"],
+    pictures: [
+      "https://i.pinimg.com/564x/3e/3c/ed/3e3ced747ebd067b4d3c3c8ea6452eb9.jpg",
+      "https://i.pinimg.com/564x/dd/73/9e/dd739ec57f5787bc063bb6b49c04d7ce.jpg",
+      "https://i.pinimg.com/564x/eb/3c/38/eb3c3861794730426612db4dbc30e49b.jpg",
+      "https://i.pinimg.com/564x/13/10/f5/1310f5c5680e062e8461c4ba92c6d073.jpg"
+    ],
     category: "Park",
     rating: 4.5,
   ),
@@ -323,7 +328,12 @@ List<Place> places = const [
     region: "Oromia",
     latitude: 6.8759,
     longitude: 39.2872,
-    pictures: ["url1", "url2"],
+    pictures: [
+      "https://i.pinimg.com/564x/8f/37/81/8f3781ab598c56c60701471e4443edf3.jpg",
+      "https://i.pinimg.com/236x/b0/d4/50/b0d450800340d0db0229ec0a3bce12f8.jpg",
+      "https://i.pinimg.com/564x/c8/ff/32/c8ff32fdf1245515cd4d1ef924cb30f5.jpg",
+      "https://i.pinimg.com/564x/29/e8/7b/29e87b4d6d825fe7f9467057ee4e3965.jpgl"
+    ],
     category: "Park",
     rating: 4.7,
   ),
@@ -335,7 +345,11 @@ List<Place> places = const [
     region: "Afar",
     latitude: 9.0244,
     longitude: 40.7974,
-    pictures: ["url1", "url2"],
+    pictures: [
+      "https://i.pinimg.com/564x/05/28/3f/05283f78d99cd73466b99d5552714a72.jpg",
+      "https://i.pinimg.com/564x/6b/aa/ac/6baaacbd646ce463239eae68b7efe39d.jpg",
+      "https://i.pinimg.com/564x/6a/ae/e0/6aaee0f2d6c808d9979b8a8afc0a67e6.jpg"
+    ],
     category: "Park",
     rating: 4.3,
   ),
@@ -347,7 +361,12 @@ List<Place> places = const [
     region: "Addis Ababa",
     latitude: 9.0500,
     longitude: 38.7833,
-    pictures: ["url1", "url2"],
+    pictures: [
+      "https://i.pinimg.com/564x/e9/40/b2/e940b245e50d2c9a18e39a28f3854545.jpg",
+      "https://i.pinimg.com/564x/00/cf/68/00cf68245b950a855a3508f77db9ed1b.jpg",
+      "https://i.pinimg.com/564x/b8/9a/c2/b89ac28f6b5fa285caf0ca7c8fc65e51.jpg",
+      "https://i.pinimg.com/564x/bf/16/21/bf162179d786e71a2da0d7a9b3447a09.jpg"
+    ],
     category: "Park",
     rating: 4.4,
   ),
@@ -365,4 +384,4 @@ List<Place> religiousAttractions =
     places.where((place) => place.category == "Religious").toList();
 
 List<Place> parkAttractions =
-    places.where((place) => place.category == "Parks").toList();
+    places.where((place) => place.category == "Park").toList();
