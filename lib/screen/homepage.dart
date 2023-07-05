@@ -297,7 +297,7 @@ class PlaceCard extends HookConsumerWidget {
               children: List.generate(5, (index) => index + 1)
                   .map(
                     (e) => Icon(
-                      e <= this.place.rating
+                      e <= place.rating
                           ? Icons.star_rounded
                           : Icons.star_outline_rounded,
                       color: Color(0xFFD99E6A),

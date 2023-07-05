@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ethio_tour/config/colors.dart';
 import 'package:ethio_tour/controller/categories/place_controller.dart';
+import 'package:ethio_tour/controller/categories/weather_controller.dart';
 import 'package:ethio_tour/screen/review.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -21,6 +23,9 @@ class PlaceDetails extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var place = ref.watch(currentPlaceProvider);
+    var weather = ref.watch(
+      currentWeatherProvider(lat: place.latitude, lon: place.longitude),
+    );
     var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: KPrimary.shade700,
@@ -134,7 +139,7 @@ class PlaceDetails extends HookConsumerWidget {
                                   width: 100,
                                 ),
                                 Row(
-                                  children: const [
+                                  children: [
                                     Icon(
                                       Icons.cloudy_snowing,
                                       color: KAccentColor.shade400,
@@ -143,24 +148,34 @@ class PlaceDetails extends HookConsumerWidget {
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          "16°",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 30,
-                                          ),
-                                        ),
-                                        Text(
-                                          "Temp",
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.white70,
-                                          ),
-                                        )
-                                      ],
+                                    weather.when(
+                                      data: (data) {
+                                        return Column(
+                                          children: [
+                                            Text(
+                                              "${data["main"]["temp"].round()}°",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 30,
+                                              ),
+                                            ),
+                                            Text(
+                                              "Temp",
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.white70,
+                                              ),
+                                            )
+                                          ],
+                                        );
+                                      },
+                                      error: (error, stackTrace) =>
+                                          Text("Error"),
+                                      loading: () => Center(
+                                        child: CircularProgressIndicator(
+                                            strokeWidth: 2),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -230,9 +245,9 @@ class Header extends HookConsumerWidget {
               items: imgs
                   .map(
                     (e) => SizedBox.expand(
-                      child: Image(
+                      child: CachedNetworkImage(
+                        imageUrl: e,
                         fit: BoxFit.cover,
-                        image: AssetImage(e),
                       ),
                     ),
                   )
