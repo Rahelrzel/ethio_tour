@@ -16,21 +16,21 @@ class _BottomNavBarState extends State<BottomNavBar> {
   List<IconData> listOfIcons = [
     Icons.home_rounded,
     Icons.calendar_month,
-    Icons.settings_rounded,
+    Icons.currency_exchange_rounded,
     Icons.person_rounded,
   ];
 
   List<String> listOfStrings = [
     'Home',
     'Calendar',
-    'Settings',
+    'currency',
     'Account',
   ];
 
   List<String> listOfPath = [
     "/home",
     "/calendar",
-    "/settings",
+    "/currency",
     "/account",
   ];
 

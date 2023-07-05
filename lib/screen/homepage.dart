@@ -1,3 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ethio_tour/data/places_data.dart';
+import 'package:ethio_tour/models/categorie/category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -125,14 +128,11 @@ class _HomePageState extends State<HomePage> {
                       height: 260,
                       width: size.width,
                       child: ListView.builder(
+                        itemCount: historicalAttractions.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
                           return PlaceCard(
-                            id: 1,
-                            name: "Axum",
-                            rating: 4,
-                            region: 'Tigray',
-                            image: 'assets/images/ethio.jpeg',
+                            place: historicalAttractions[index],
                           );
                         },
                       ),
@@ -155,11 +155,7 @@ class _HomePageState extends State<HomePage> {
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
                           return PlaceCard(
-                            id: 1,
-                            name: "Axum",
-                            rating: 4,
-                            region: 'Tigray',
-                            image: 'assets/images/ethio.jpeg',
+                            place: places[0],
                           );
                         },
                       ),
@@ -187,26 +183,15 @@ class _HomePageState extends State<HomePage> {
 }
 
 class PlaceCard extends StatelessWidget {
-  const PlaceCard({
-    super.key,
-    required this.id,
-    required this.name,
-    required this.region,
-    required this.rating,
-    required this.image,
-  });
+  const PlaceCard({super.key, required this.place});
 
-  final int id;
-  final String name;
-  final String region;
-  final String image;
-  final double rating;
+  final Place place;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.go('/place-details/$id');
+        context.go('/place-details/$place.id');
       },
       child: Container(
         width: 250,
@@ -225,8 +210,8 @@ class PlaceCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 clipBehavior: Clip.antiAlias,
-                child: Image.asset(
-                  this.image,
+                child: CachedNetworkImage(
+                  imageUrl: place.pictures[0],
                   fit: BoxFit.cover,
                 ),
               ),
@@ -235,7 +220,7 @@ class PlaceCard extends StatelessWidget {
               height: 8,
             ),
             Text(
-              this.name,
+              this.place.name,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,
@@ -243,7 +228,7 @@ class PlaceCard extends StatelessWidget {
               ),
             ),
             Text(
-              this.region,
+              this.place.region,
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.white.withOpacity(0.3),
@@ -256,7 +241,7 @@ class PlaceCard extends StatelessWidget {
               children: List.generate(5, (index) => index + 1)
                   .map(
                     (e) => Icon(
-                      e <= this.rating
+                      e <= this.place.rating
                           ? Icons.star_rounded
                           : Icons.star_outline_rounded,
                       color: Color(0xFFD99E6A),
