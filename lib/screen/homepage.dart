@@ -22,206 +22,228 @@ class _HomePageState extends State<HomePage> {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Color(0xFF22403D),
-      body: CustomScrollView(slivers: [
-        SliverAppBar(
-          backgroundColor: Color(0xFF22403D),
-          foregroundColor: Colors.white,
-          pinned: true,
-          expandedHeight: 200,
-          // collapsedHeight: 0,
-          leadingWidth: double.infinity,
-          leading: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.only(left: 20, right: 5),
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 45, 92, 85)
-                          .withOpacity(0.8),
-                      borderRadius: BorderRadius.circular(40),
-                    ),
-                    child: Row(
-                      children: [
-                        const Expanded(
-                          child: TextField(
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.zero,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor: Color(0xFF22403D),
+            foregroundColor: Colors.white,
+            pinned: true,
+            expandedHeight: 200,
+            // collapsedHeight: 0,
+            leadingWidth: double.infinity,
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 20, right: 5),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 45, 92, 85)
+                            .withOpacity(0.8),
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      child: Row(
+                        children: [
+                          const Expanded(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.zero,
+                              ),
+                              cursorColor: Colors.white,
+                              style: TextStyle(color: Colors.white),
                             ),
-                            cursorColor: Colors.white,
-                            style: TextStyle(color: Colors.white),
                           ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.search),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  const CircleAvatar(
+                    // radius: 10,
+                    backgroundImage: AssetImage(
+                      "assets/images/protect.jpeg",
+                    ),
+                  )
+                ],
+              ),
+            ),
+            flexibleSpace: FlexibleSpaceBar(
+              background: Stack(
+                children: [
+                  SizedBox.expand(
+                    child: Image.asset(
+                      "assets/images/home-appbar.jpeg",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color.fromARGB(0, 54, 115, 104),
+                          Color.fromARGB(61, 45, 92, 85),
+                          Color(0x7A264B46),
+                          Color.fromARGB(255, 20, 41, 39),
+                        ],
+                        stops: [0, 0.1912, 0.5, 1],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 20,
+                    bottom: 20,
+                    child: Text(
+                      "Explore Ethiopia like a local".toUpperCase(),
+                      style: GoogleFonts.lobster(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                ],
+              ),
+              // collapseMode: CollapseMode.none,
+            ),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                SizedBox(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      sectionTitle("Historical Sites"),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        height: 260,
+                        width: size.width,
+                        child: ListView.builder(
+                          itemCount: historicalAttractions.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return PlaceCard(
+                              place: historicalAttractions[index],
+                            );
+                          },
                         ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.search),
-                        )
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                const CircleAvatar(
-                  // radius: 10,
-                  backgroundImage: AssetImage(
-                    "assets/images/protect.jpeg",
-                  ),
-                )
-              ],
-            ),
-          ),
-          flexibleSpace: FlexibleSpaceBar(
-            background: Stack(
-              children: [
-                SizedBox.expand(
-                  child: Image.asset(
-                    "assets/images/home-appbar.jpeg",
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color.fromARGB(0, 54, 115, 104),
-                        Color.fromARGB(61, 45, 92, 85),
-                        Color(0x7A264B46),
-                        Color.fromARGB(255, 20, 41, 39),
-                      ],
-                      stops: [0, 0.1912, 0.5, 1],
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 20,
-                  bottom: 20,
-                  child: Text(
-                    "Explore Ethiopia like a local".toUpperCase(),
-                    style: GoogleFonts.lobster(
-                      fontSize: 18,
-                      color: Colors.white,
-                    ),
-                    textAlign: TextAlign.start,
-                  ),
-                ),
-              ],
-            ),
-            // collapseMode: CollapseMode.none,
-          ),
-        ),
-        SliverList(
-            delegate: SliverChildListDelegate([
-          SizedBox(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                sectionTitle("Historical Sites"),
-                SizedBox(
-                  height: 10,
                 ),
                 SizedBox(
-                  height: 260,
-                  width: size.width,
-                  child: ListView.builder(
-                    itemCount: historicalAttractions.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return PlaceCard(
-                        place: historicalAttractions[index],
-                      );
-                    },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      sectionTitle("Natural Attractions"),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        height: 260,
+                        width: size.width,
+                        child: ListView.builder(
+                          itemCount: naturalAttractions.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return PlaceCard(
+                              place: naturalAttractions[index],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      sectionTitle("Cultural"),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        height: 260,
+                        width: size.width,
+                        child: ListView.builder(
+                          itemCount: culturalAttractions.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return PlaceCard(
+                              place: culturalAttractions[index],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      sectionTitle("Religious"),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        height: 260,
+                        width: size.width,
+                        child: ListView.builder(
+                          itemCount: religiousAttractions.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return PlaceCard(
+                              place: religiousAttractions[index],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      sectionTitle("Parks"),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        height: 260,
+                        width: size.width,
+                        child: ListView.builder(
+                          itemCount: parkAttractions.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return PlaceCard(
+                              place: parkAttractions[index],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
           ),
-        ])),
-        SizedBox(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          sectionTitle("Natural Landscapes"),
-          SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            height: 260,
-            width: size.width,
-            child: ListView.builder(
-              itemCount: naturalAttractions.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return PlaceCard(place: naturalAttractions[index]);
-              },
-            ),
-          ),
-        ])),
-        SizedBox(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          sectionTitle("Natural Landscapes"),
-          SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            height: 260,
-            width: size.width,
-            child: ListView.builder(
-              itemCount: culturalAttractions.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return PlaceCard(place: culturalAttractions[index]);
-              },
-            ),
-          ),
-        ])),
-        SizedBox(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          sectionTitle("Natural Landscapes"),
-          SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            height: 260,
-            width: size.width,
-            child: ListView.builder(
-              itemCount: religiousAttractions.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return PlaceCard(place: religiousAttractions[index]);
-              },
-            ),
-          ),
-        ])),
-        SizedBox(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              sectionTitle("Natural Landscapes"),
-              SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: 260,
-                width: size.width,
-                child: ListView.builder(
-                  itemCount: parkAttractions.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return PlaceCard(place: parkAttractions[index]);
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 
@@ -230,7 +252,7 @@ class _HomePageState extends State<HomePage> {
       padding: const EdgeInsets.only(left: 20, top: 20),
       child: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
             fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
       ),
     );
