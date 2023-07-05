@@ -4,9 +4,10 @@ import 'package:ethio_tour/screen/intro.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() {
-  runApp(const EthioTour());
+  runApp(const ProviderScope(child: EthioTour()));
 }
 
 class EthioTour extends StatelessWidget {

@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ethio_tour/controller/categories/place_controller.dart';
 import 'package:ethio_tour/data/places_data.dart';
 import 'package:ethio_tour/models/categorie/category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -235,16 +237,17 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class PlaceCard extends StatelessWidget {
+class PlaceCard extends HookConsumerWidget {
   const PlaceCard({super.key, required this.place});
 
   final Place place;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () {
-        context.go('/place-details/$place.id');
+        ref.read(currentPlaceProvider.notifier).setCurrentPlace(place);
+        context.push('/place-details/${place.id}');
       },
       child: Container(
         width: 250,
@@ -269,7 +272,7 @@ class PlaceCard extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
             Text(

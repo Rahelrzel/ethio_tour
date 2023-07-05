@@ -2,11 +2,15 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ethio_tour/config/colors.dart';
+import 'package:ethio_tour/controller/categories/place_controller.dart';
 import 'package:ethio_tour/screen/review.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class PlaceDetails extends StatelessWidget {
+class PlaceDetails extends HookConsumerWidget {
   const PlaceDetails({
     super.key,
     required this.id,
@@ -15,7 +19,8 @@ class PlaceDetails extends StatelessWidget {
   final int id;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var place = ref.watch(currentPlaceProvider);
     var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: KPrimary.shade700,
@@ -37,9 +42,9 @@ class PlaceDetails extends StatelessWidget {
                       .copyWith(top: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: const [
+                    children: [
                       Text(
-                        "Axum",
+                        "${place?.name}",
                         style: TextStyle(
                           fontSize: 24,
                           color: Colors.white,
@@ -47,7 +52,7 @@ class PlaceDetails extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "Tigray",
+                        "${place?.region}",
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.grey,
@@ -91,7 +96,7 @@ class PlaceDetails extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10),
                         child: Column(
-                          children: const [
+                          children: [
                             Row(
                               children: [
                                 Row(
@@ -107,7 +112,7 @@ class PlaceDetails extends StatelessWidget {
                                     Column(
                                       children: [
                                         Text(
-                                          "4.5",
+                                          "${place?.rating}",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
@@ -129,7 +134,7 @@ class PlaceDetails extends StatelessWidget {
                                   width: 100,
                                 ),
                                 Row(
-                                  children: [
+                                  children: const [
                                     Icon(
                                       Icons.cloudy_snowing,
                                       color: KAccentColor.shade400,
@@ -165,14 +170,25 @@ class PlaceDetails extends StatelessWidget {
                               height: 30,
                             ),
                             Text(
-                              "The Axum mobile app offers a comprehensive guide to this UNESCO World Heritage Site, presenting a wealth of information at your fingertips. Discover the rich history of the Aksumite Empire, a powerful civilization that flourished from the 1st to the 8th century AD, shaping the region's culture, trade, and religion. Through interactive maps, stunning visuals, and expertly curated content, the app takes you on a virtual tour of Axum's iconic landmarks. Explore the awe-inspiring obelisks, towering stone monuments that symbolize the city's former glory. Learn about the significance of the obelisks and their intricate carvings, which showcase the empire's architectural prowess and spiritual beliefs.",
+                              "${place?.desc}",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 18),
                             )
                           ],
                         ),
                       ),
-                      Container(),
+                      Container(
+                        child: GoogleMap(
+                          mapType: MapType.hybrid,
+                          initialCameraPosition: CameraPosition(
+                            target: LatLng(
+                              place?.latitude ?? 0,
+                              place?.longitude ?? 0,
+                            ),
+                            zoom: 15,
+                          ),
+                        ),
+                      ),
                       Review(),
                     ],
                   ),
@@ -186,25 +202,14 @@ class PlaceDetails extends StatelessWidget {
   }
 }
 
-class Header extends StatefulWidget {
-  const Header({
-    super.key,
-  });
-
+class Header extends HookConsumerWidget {
   @override
-  State<Header> createState() => _HeaderState();
-}
-
-class _HeaderState extends State<Header> {
-  var current = 0;
-  final List<String> imgs = List.generate(
-    4,
-    (index) => 'assets/images/${index % 2 == 0 ? 'ethio' : 'home-appbar'}.jpeg',
-  );
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var current = useState(0);
     var size = MediaQuery.of(context).size;
+    var place = ref.watch(currentPlaceProvider);
+    var imgs = place?.pictures ?? [];
+
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
@@ -220,9 +225,7 @@ class _HeaderState extends State<Header> {
                   padEnds: false,
                   viewportFraction: 1,
                   onPageChanged: (index, reason) {
-                    setState(() {
-                      current = index;
-                    });
+                    current.value = index;
                   }),
               items: imgs
                   .map(
@@ -250,7 +253,7 @@ class _HeaderState extends State<Header> {
             child: Center(
               child: IconButton(
                 onPressed: () {
-                  context.go('/home');
+                  context.pop();
                 },
                 icon: Icon(Icons.arrow_back),
                 color: Colors.white,
@@ -269,9 +272,10 @@ class _HeaderState extends State<Header> {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return AnimatedContainer(
-                  width: current == index ? 30 : 8,
+                  width: current.value == index ? 30 : 8,
                   decoration: BoxDecoration(
-                    color: current == index ? Colors.white : Colors.white54,
+                    color:
+                        current.value == index ? Colors.white : Colors.white54,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   duration: Duration(
