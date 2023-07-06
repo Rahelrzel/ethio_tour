@@ -1,5 +1,7 @@
 import 'package:abushakir/abushakir.dart';
 import 'package:ethio_tour/config/colors.dart';
+import 'package:ethio_tour/data/calendar/EthiopianCalendar.dart';
+import 'package:ethio_tour/data/utils/util.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -29,9 +31,9 @@ class _CalendarPageState extends State<CalendarPage> {
     var startJump = days[0].last;
     var today = EtDatetime(year: now.year, day: now.day, month: now.month);
 
-    var events = bh.allAtswamat
+    var events = getHolidays(now.year)
         .where(
-          (element) => element['day']['month'] == current.monthName,
+          (element) => element['month'] == current.monthName,
         )
         .toList();
 
@@ -158,6 +160,13 @@ class _CalendarPageState extends State<CalendarPage> {
                                       ? KPrimary.shade700
                                       : Colors.transparent,
                                   borderRadius: BorderRadius.circular(30),
+                                  border: EthiopianCalendar(
+                                              year: e[0],
+                                              month: e[1],
+                                              day: e[2])
+                                          .isHoliday
+                                      ? Border.all(color: KAccentColor.shade400)
+                                      : null,
                                 ),
                                 child: Center(
                                   child: Text(
@@ -199,14 +208,14 @@ class _CalendarPageState extends State<CalendarPage> {
                     ),
                     iconColor: KAccentColor.shade400,
                     title: Text(
-                      '${events[index]['beal']}',
+                      '${events[index]['name']}',
                       style: const TextStyle(
                         fontSize: 20,
                         color: KAccentColor.shade400,
                       ),
                     ),
                     subtitle: Text(
-                      '${events[index]['day']['month']} ${events[index]['day']['date']}, ${current.year}',
+                      '${events[index]['day']} ${events[index]['month']}, ${current.year}',
                       style: const TextStyle(
                         color: KAccentColor.shade100,
                       ),
