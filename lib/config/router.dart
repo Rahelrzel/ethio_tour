@@ -60,7 +60,7 @@ final routerConfig = GoRouter(
         ),
         GoRoute(
           path: '/calendar/converter',
-          builder: (context, state) => const CalendarConverterPage(),
+          builder: (context, state) => CalendarConverterPage(),
         ),
         GoRoute(
           path: '/currency',
