@@ -33,7 +33,7 @@ class Profile extends StatelessWidget {
                   left: MediaQuery.of(context).size.width / 2 - 60.0,
                   child: CircleAvatar(
                     radius: 60.0,
-                    backgroundImage: AssetImage(''),
+                    backgroundImage: AssetImage('assets/images/profile.jpeg'),
                   ),
                 ),
               ],
