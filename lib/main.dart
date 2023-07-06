@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:ethio_tour/config/colors.dart';
 import 'package:ethio_tour/config/router.dart';
 import 'package:ethio_tour/screen/intro.dart';
@@ -6,7 +7,10 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
   runApp(const ProviderScope(child: EthioTour()));
 }
 

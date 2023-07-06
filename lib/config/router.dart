@@ -10,6 +10,7 @@ import 'package:ethio_tour/screen/intro.dart';
 import 'package:ethio_tour/screen/place_details.dart';
 import 'package:ethio_tour/screen/profile.dart';
 import 'package:ethio_tour/screen/register.dart';
+import 'package:ethio_tour/screen/search.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -70,6 +71,10 @@ final routerConfig = GoRouter(
         GoRoute(
           path: '/profile',
           builder: (context, state) => Profile(),
+        ),
+        GoRoute(
+          path: '/search',
+          builder: (context, state) => Search(),
         ),
       ],
     ),

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:ethio_tour/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -102,18 +103,21 @@ class _BottomNavBarState extends State<BottomNavBar> {
                           curve: Curves.fastLinearToSlowEaseIn,
                           width: index == currentIndex ? displayWidth * .13 : 0,
                         ),
-                        AnimatedOpacity(
-                          opacity: index == currentIndex ? 1 : 0,
-                          duration: const Duration(seconds: 1),
-                          curve: Curves.fastLinearToSlowEaseIn,
-                          child: Text(
-                            index == currentIndex
-                                ? '${listOfStrings[index]}'
-                                : '',
-                            style: const TextStyle(
-                              color: KAccentColor.shade500,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
+                        Expanded(
+                          child: AnimatedOpacity(
+                            opacity: index == currentIndex ? 1 : 0,
+                            duration: const Duration(seconds: 1),
+                            curve: Curves.fastLinearToSlowEaseIn,
+                            child: AutoSizeText(
+                              index == currentIndex
+                                  ? '${listOfStrings[index]}'
+                                  : '',
+                              style: const TextStyle(
+                                color: KAccentColor.shade500,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18,
+                              ),
+                              maxLines: 1,
                             ),
                           ),
                         ),

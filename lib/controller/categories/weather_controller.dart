@@ -6,11 +6,7 @@ part 'weather_controller.g.dart';
 
 String weatherHost = 'api.openweathermap.org';
 String weatherApi = "data/2.5/weather";
-String forecastAPi = "data/2.5/forecast";
 String appid = "22e54ab45e2324d971afac83f3c911af";
-
-String weatherIconUrl(String iconCode) =>
-    'https://openweathermap.org/img/wn/$iconCode@4x.png';
 
 @riverpod
 Future<Map<String, dynamic>> currentWeather(Ref ref,

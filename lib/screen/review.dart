@@ -18,7 +18,7 @@ class Review extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              height: 400,
+              height: 420,
               padding: EdgeInsets.all(25),
               decoration: BoxDecoration(
                 color: KPrimary.shade800,
@@ -63,7 +63,8 @@ class Review extends StatelessWidget {
                     child: Row(
                       children: [
                         CircleAvatar(
-                          backgroundImage: AssetImage(''),
+                          backgroundImage:
+                              AssetImage('assets/images/profile.jpeg'),
                         ),
                         SizedBox(
                           width: 15,
