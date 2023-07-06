@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
             foregroundColor: Colors.white,
             pinned: true,
             expandedHeight: 200,
-            // collapsedHeight: 0,
+            collapsedHeight: 80,
             leadingWidth: double.infinity,
             leading: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                     child: Container(
+                      height: 80,
                       padding: const EdgeInsets.only(left: 20, right: 5),
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 45, 92, 85)

@@ -56,7 +56,7 @@ class _IntroPageState extends State<IntroPage> {
                     ),
                   ),
                   const Text(
-                    'Discover the wonders of Ethiopia! Explore ancient rock-hewn churches, breathtaking landscapes, vibrant markets, and rich cultural traditions.',
+                    'Uncover Ethiopia\'s wonders with our Tour Guide App - your gateway to ancient treasures, breathtaking landscapes, and vibrant culture. Let us be your companion as you explore this extraordinary destination.',
                     style: TextStyle(color: Colors.white, fontSize: 15),
                   )
                 ],
