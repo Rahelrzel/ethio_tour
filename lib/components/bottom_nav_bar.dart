@@ -24,14 +24,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
     'Home',
     'Calendar',
     'currency',
-    'Account',
+    'Profile',
   ];
 
   List<String> listOfPath = [
     "/home",
     "/calendar",
     "/currency",
-    "/account",
+    "/profile",
   ];
 
   @override

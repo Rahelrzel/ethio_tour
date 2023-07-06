@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:abushakir/abushakir.dart';
 import 'package:ethio_tour/config/colors.dart';
 import 'package:ethio_tour/data/calendar_data.dart';
