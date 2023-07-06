@@ -64,7 +64,7 @@ final routerConfig = GoRouter(
         ),
         GoRoute(
           path: '/currency',
-          builder: (context, state) => Currency(),
+          builder: (context, state) => const CurrencyConverter(),
         ),
       ],
     ),

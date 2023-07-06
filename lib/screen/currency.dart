@@ -1,25 +1,38 @@
 import 'package:ethio_tour/config/colors.dart';
+import 'package:ethio_tour/controller/categories/currency_controller.dart';
+import 'package:ethio_tour/data/currency_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class Currency extends StatefulWidget {
-  const Currency({Key? key});
-
+class CurrencyConverter extends HookConsumerWidget {
+  const CurrencyConverter({super.key});
   @override
-  State<Currency> createState() => _CurrencyState();
-}
-
-class _CurrencyState extends State<Currency> {
-  String dropdownValue = 'Option 1';
-  TextEditingController fromcontroller = TextEditingController(text: "0");
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var size = MediaQuery.of(context).size;
+    final fromController = useTextEditingController(text: "0");
+    final toController = useTextEditingController();
+    final from = useState("ETB");
+    final to = useState('USD');
+
+    final exchangeRate = ref.watch(rateProvider(
+      have: from.value,
+      want: to.value,
+    ));
+    if (exchangeRate.isLoading) {
+      toController.text = 'Loading Rate';
+    }
+
+    if (exchangeRate.asData != null) {
+      toController.text =
+          (double.parse(fromController.text) * exchangeRate.value!)
+              .toStringAsFixed(2);
+    }
     return Scaffold(
       backgroundColor: KPrimary.shade800,
       appBar: AppBar(
-        title: Text(
-          'currency',
+        title: const Text(
+          'Currency',
           style: TextStyle(color: KAccentColor.shade200),
         ),
       ),
@@ -49,26 +62,20 @@ class _CurrencyState extends State<Currency> {
                             borderRadius: BorderRadius.circular(30),
                             padding: EdgeInsets.all(1),
                             dropdownColor: KPrimary.shade900,
-                            value: dropdownValue,
+                            value: from.value,
                             onChanged: (String? newValue) {
-                              setState(() {
-                                if (newValue != null) {
-                                  dropdownValue = newValue;
-                                }
-                              });
+                              if (newValue != null) {
+                                from.value = newValue;
+                              }
                             },
-                            items: <String>[
-                              'Option 1',
-                              'Option 2',
-                              'Option 3',
-                              'Option 4'
-                            ].map<DropdownMenuItem<String>>(
-                              (String value) {
+                            items: mostUsedCurrencies
+                                .map<DropdownMenuItem<String>>(
+                              (value) {
                                 return DropdownMenuItem<String>(
-                                  value: value,
+                                  value: value["code"],
                                   child: Text(
-                                    value,
-                                    style: TextStyle(color: Colors.white),
+                                    "${value['name']} (${value["code"]!})",
+                                    style: const TextStyle(color: Colors.white),
                                   ),
                                 );
                               },
@@ -84,14 +91,16 @@ class _CurrencyState extends State<Currency> {
                 ],
               ),
               TextField(
-                controller: fromcontroller,
+                controller: fromController,
+                enabled: false,
                 textDirection: TextDirection.rtl,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white, fontSize: 30),
               ),
               Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     width: size.width * 0.5,
                     decoration: BoxDecoration(
                         color: KPrimary.shade900,
@@ -108,32 +117,26 @@ class _CurrencyState extends State<Currency> {
                             borderRadius: BorderRadius.circular(30),
                             padding: EdgeInsets.all(1),
                             dropdownColor: KPrimary.shade900,
-                            value: dropdownValue,
+                            value: to.value,
                             onChanged: (String? newValue) {
-                              setState(() {
-                                if (newValue != null) {
-                                  dropdownValue = newValue;
-                                }
-                              });
+                              if (newValue != null) {
+                                to.value = newValue;
+                              }
                             },
-                            items: <String>[
-                              'Option 1',
-                              'Option 2',
-                              'Option 3',
-                              'Option 4'
-                            ].map<DropdownMenuItem<String>>(
-                              (String value) {
+                            items: mostUsedCurrencies
+                                .map<DropdownMenuItem<String>>(
+                              (value) {
                                 return DropdownMenuItem<String>(
-                                  value: value,
+                                  value: value["code"],
                                   child: Text(
-                                    value,
-                                    style: TextStyle(color: Colors.white),
+                                    "${value["name"]} (${value["code"]})",
+                                    style: const TextStyle(color: Colors.white),
                                   ),
                                 );
                               },
                             ).toList(),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                         ],
@@ -143,11 +146,12 @@ class _CurrencyState extends State<Currency> {
                 ],
               ),
               TextField(
-                controller: fromcontroller,
+                controller: toController,
+                enabled: false,
                 textDirection: TextDirection.rtl,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white, fontSize: 30),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               GridView.count(
@@ -157,20 +161,46 @@ class _CurrencyState extends State<Currency> {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
                 children: [
-                  _buildButton('7'),
-                  _buildButton('8'),
-                  _buildButton('9'),
-                  _buildButton('back', Icons.backspace),
-                  _buildButton('4'),
-                  _buildButton('5'),
-                  _buildButton('6'),
-                  _buildButton('c'),
-                  _buildButton('1'),
-                  _buildButton('2'),
-                  _buildButton('3'),
-                  _buildButton('exchenge', Icons.currency_exchange, true),
-                  _buildButton('0'),
-                  _buildButton('.'),
+                  _buildButton('7', fromController),
+                  _buildButton('8', fromController),
+                  _buildButton('9', fromController),
+                  _buildButton('back', fromController, Icons.backspace),
+                  _buildButton('4', fromController),
+                  _buildButton('5', fromController),
+                  _buildButton('6', fromController),
+                  _buildButton('c', fromController),
+                  _buildButton('1', fromController),
+                  _buildButton('2', fromController),
+                  _buildButton('3', fromController),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(300),
+                        ),
+                      ),
+                      backgroundColor:
+                          MaterialStateProperty.all(KAccentColor.shade500),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Icon(Icons.currency_exchange,
+                          color: KPrimary.shade900),
+                    ),
+                    onPressed: () {
+                      if (exchangeRate.isLoading) {
+                        toController.text = 'Loading Rate';
+                        return;
+                      }
+                      if (exchangeRate.asData != null) {
+                        toController.text = (double.parse(fromController.text) *
+                                exchangeRate.value!)
+                            .toStringAsFixed(2);
+                      }
+                    },
+                  ),
+                  _buildButton('0', fromController),
+                  _buildButton('.', fromController),
                 ],
               ),
             ],
@@ -180,7 +210,8 @@ class _CurrencyState extends State<Currency> {
     );
   }
 
-  Widget _buildButton(String buttonText, [IconData? icon, bool? primary]) {
+  Widget _buildButton(String buttonText, TextEditingController fromcontroller,
+      [IconData? icon, bool? primary]) {
     return SizedBox(
       width: 30,
       height: 30,
@@ -215,8 +246,12 @@ class _CurrencyState extends State<Currency> {
           if (buttonText == '.' && fromcontroller.text.contains('.')) {
             return;
           } else if (buttonText == 'back') {
-            fromcontroller.text = fromcontroller.text
-                .substring(0, fromcontroller.text.length - 2);
+            if (fromcontroller.text.length > 1) {
+              fromcontroller.text = fromcontroller.text
+                  .substring(0, fromcontroller.text.length - 1);
+            } else {
+              fromcontroller.text = '0';
+            }
             return;
           } else if (buttonText == 'c') {
             fromcontroller.clear();
